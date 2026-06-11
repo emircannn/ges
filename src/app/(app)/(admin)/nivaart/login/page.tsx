@@ -32,7 +32,7 @@ export default function LoginPage() {
       });
 
       if (result?.error) {
-        setError("Hatalı e-posta adresi veya şifre.");
+        setError(result.error);
         setIsLoading(false);
       } else {
         router.replace("/nivaart/dashboard");

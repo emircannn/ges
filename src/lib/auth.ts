@@ -16,8 +16,14 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Lütfen e-posta adresinizi ve şifrenizi girin.");
         }
 
-        // Statically mock credentials for deployment
-        if (credentials.username === "admin@admin.com" && credentials.password === "admin123") {
+        const email = credentials.username.trim().toLowerCase();
+        const password = credentials.password.trim();
+
+        // Mock login with flexible check for demo purposes
+        if (
+          (email === "admin@admin.com" || email === "admin") &&
+          (password === "admin123" || password === "admin")
+        ) {
           return {
             id: "1",
             name: "admin",
