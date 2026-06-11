@@ -1,11 +1,9 @@
-import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
 
-export default withAuth({
-  pages: {
-    signIn: "/nivaart/login",
-  },
-});
+export default function middleware() {
+  return NextResponse.next();
+}
 
 export const config = {
-  matcher: ["/nivaart/dashboard/:path*"],
+  matcher: [],
 };

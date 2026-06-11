@@ -31,22 +31,22 @@ export default function AdminDashboardLayout({
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const pathname = usePathname();
-  const { data: session } = useSession();
   const [notificationCount, setNotificationCount] = useState(0);
 
-  const user = session?.user as {
-    email?: string | null;
-    role?: string;
-    manageBlogs?: boolean;
-    manageProducts?: boolean;
-    manageGallery?: boolean;
-    manageSettings?: boolean;
-    manageMessages?: boolean;
-  } | undefined;
-  const userEmail = user?.email;
-  const userRole = user?.role;
-  const userManageMessages = user?.manageMessages;
-  const isAdmin = userRole === "ADMIN";
+  // Statically mock admin session for demo layout
+  const user = {
+    email: "admin@admin.com",
+    role: "ADMIN",
+    manageBlogs: true,
+    manageProducts: true,
+    manageGallery: true,
+    manageMessages: true,
+    manageSettings: true,
+  };
+  const userEmail = user.email;
+  const userRole = user.role;
+  const userManageMessages = user.manageMessages;
+  const isAdmin = true;
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -219,7 +219,7 @@ export default function AdminDashboardLayout({
               </div>
               <div className="min-w-0">
                 <p className="text-sm font-semibold truncate">
-                  {session?.user?.email || "Yönetici"}
+                  {userEmail || "Yönetici"}
                 </p>
                 <p className="text-xs text-zinc-555 truncate">
                   {isAdmin ? "Sistem Yöneticisi" : "Çalışan"}
