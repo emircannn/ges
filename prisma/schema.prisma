@@ -1,0 +1,95 @@
+datasource db {
+  provider = "mysql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// User model for secure admin panel authentication
+model User {
+  id             Int      @id @default(autoincrement())
+  email          String   @unique
+  passwordHash   String
+  role           String   @default("STAFF") // "ADMIN", "STAFF"
+  manageBlogs    Boolean  @default(false)
+  manageProducts Boolean  @default(false)
+  manageGallery  Boolean  @default(false)
+  manageMessages Boolean  @default(false)
+  manageSettings Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// Blog Post model for dynamic articles
+model BlogPost {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  summary     String   @db.Text
+  content     String   @db.LongText
+  imageUrl    String?
+  published   Boolean  @default(false)
+  views       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Product model for showcased cleaning inventory
+model Product {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  name        String
+  description String   @db.Text
+  specs       String?  @db.Text
+  price       Decimal? @db.Decimal(10, 2)
+  imageUrl    String?
+  inStock     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Gallery Media model for project cleanups showcase
+model GalleryItem {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?  @db.Text
+  imageUrl    String?
+  videoUrl    String?
+  mediaType   String   @default("IMAGE") // IMAGE, VIDEO
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+// Homepage Content model for CMS-driven static section edits
+model HomepageContent {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique // e.g. "hero_title", "about_section_text"
+  value       String   @db.Text
+  updatedAt   DateTime @updatedAt
+}
+
+// Contact Submission model from Customer requests
+model ContactSubmission {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// Company Settings model
+model Setting {
+  id             Int     @id @default(1)
+  phone          String
+  email          String
+  address        String
+  workingHours   String
+  whatsapp       String  @default("")
+  showBlogViews  Boolean @default(true)
+  showPrices     Boolean @default(true)
+}
+
