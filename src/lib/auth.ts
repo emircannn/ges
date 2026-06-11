@@ -87,5 +87,5 @@ export const authOptions: NextAuthOptions = {
     signIn: "/nivaart/login",
     error: "/nivaart/login",
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || "vercel-demo-static-secret-key-12345",
 };
